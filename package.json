@@ -1,0 +1,29 @@
+{
+  "name": "detect-present-api",
+  "version": "1.0.0",
+  "description": "Api de l'application de detection de présence dans un établissement scolaire.",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon app.js",
+    "start": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ronald-tchuekou/detect-presence-api.git"
+  },
+  "author": "Ronald Tchuekou",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ronald-tchuekou/detect-presence-api/issues"
+  },
+  "homepage": "https://github.com/ronald-tchuekou/detect-presence-api#readme",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "express": "^4.18.1",
+    "express-handlebars": "^6.0.5",
+    "mongoose": "^6.3.3",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.16"
+  }
+}
