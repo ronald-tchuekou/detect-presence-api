@@ -2,6 +2,7 @@ const express = require('express')
 const bodyparser = require('body-parser')
 const helmet = require("helmet");
 const compression = require('compression')
+const cors = require("cors")
 
 const classeRoutes = require('./api/routes/classe.route')
 const cycleRoutes = require('./api/routes/cycles.route')
@@ -9,7 +10,7 @@ const matiereRoutes = require('./api/routes/matiere.route')
 const notificationRoutes = require('./api/routes/notification.route')
 const paidTauxRoutes = require('./api/routes/paid_taux.route')
 const paiementRoutes = require('./api/routes/paiement.route')
-const periodRoutes = require('./api/routes/period.route')
+const horaireRoutes = require('./api/routes/horaire.route')
 const personnelRoutes = require('./api/routes/personnel.route')
 const planningRoutes = require('./api/routes/planning.route')
 
@@ -18,6 +19,7 @@ const app = express()
 
 // Config express server middlewares.
 app.use(helmet())
+app.use(cors())
 app.use(compression())
 app.use(bodyparser.json({limit: '50mb'}))
 app.use(bodyparser.urlencoded({
@@ -55,15 +57,15 @@ require('./api/models/paiement.model').createTable()
 require('./api/models/planning.model').createTable()
 
 // Routes
-app.use('classe', classeRoutes)
-app.use('cycle', cycleRoutes)
-app.use('matiere', matiereRoutes)
-app.use('notification', notificationRoutes)
-app.use('period', periodRoutes)
-app.use('personnel', personnelRoutes)
-app.use('paid_taux', paidTauxRoutes)
-app.use('paiement', paiementRoutes)
-app.use('planning', planningRoutes)
+app.use('/classe', classeRoutes)
+app.use('/cycle', cycleRoutes)
+app.use('/matiere', matiereRoutes)
+app.use('/notification', notificationRoutes)
+app.use('/horaire', horaireRoutes)
+app.use('/personnel', personnelRoutes)
+app.use('/paid_taux', paidTauxRoutes)
+app.use('/paiement', paiementRoutes)
+app.use('/planning', planningRoutes)
 
 // Server listening.
 const port = process.env.PORT || 3000;

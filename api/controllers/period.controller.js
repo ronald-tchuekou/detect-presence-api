@@ -20,7 +20,7 @@ exports.update = async (req, res) => {
       const response = await PeriodModel.updateCycle({
          ...document,
          updated_at: moment().toDate()
-      }, req.params.code)
+      }, req.params.id)
       res.json(response)
    } catch (e) {
       res.status(400).json({

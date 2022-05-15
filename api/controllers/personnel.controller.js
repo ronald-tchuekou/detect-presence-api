@@ -20,7 +20,7 @@ exports.update = async (req, res) => {
       const response = await PersonnelModel.updateCycle({
          ...document,
          updated_at: moment().toDate()
-      }, req.params.code)
+      }, req.params.id)
       res.json(response)
    } catch (e) {
       res.status(400).json({
@@ -32,7 +32,7 @@ exports.update = async (req, res) => {
 
 exports.delete = async (req, res) => {
    try {
-      const response = await PersonnelModel.deleteCycle(req.params.code)
+      const response = await PersonnelModel.deleteCycle(req.params.matricule)
       res.json(response)
    } catch (e) {
       res.status(400).json({

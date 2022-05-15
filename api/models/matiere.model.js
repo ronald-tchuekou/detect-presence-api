@@ -21,10 +21,10 @@ exports.addCycle = async (document) => await DBInstance
    .from(tableName)
    .insert(document)
 
-exports.updateCycle = async (document, code) => await DBInstance
+exports.updateCycle = async (document, matiere_id) => await DBInstance
    .from(tableName)
    .update(document)
-   .where({code})
+   .where({matiere_id})
 
 exports.getAllCycles = async () => await DBInstance
    .select()
