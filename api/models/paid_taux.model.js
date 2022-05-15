@@ -24,18 +24,23 @@ exports.createTable = () => {
    });
 }
 
-exports.addCycle = async (document) => await DBInstance
+exports.addPaidTaux = async (document) => await DBInstance
    .from(tableName)
    .insert(document)
 
-exports.updateCycle = async (document, code) => await DBInstance
+exports.updatePaidTaux = async (document, paid_taux_id) => await DBInstance
+   .where({paid_taux_id})
    .from(tableName)
    .update(document)
-   .where({code})
 
 exports.getAllCycles = async () => await DBInstance
    .select()
    .table(tableName)
+
+exports.getAllClasses = async () => await DBInstance
+   .table(ClasseTableName)
+   .join(tableName, ClasseTableName + '.classe_id' ,'=', tableName + '.classe_id')
+   .select()
 
 exports.getCycleById = async (paid_taux_id) => await DBInstance
    .where({paid_taux_id})

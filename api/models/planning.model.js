@@ -60,6 +60,13 @@ exports.getAllCycles = async () => await DBInstance
    .select()
    .table(tableName)
 
+exports.getClassePlanning = async (classe_id) => await DBInstance
+   .where({classe_id})
+   .join(MatiereTableName, tableName+'.matiere_id', MatiereTableName + '.matiere_id')
+   .join(PersonnelTableName, tableName+'.personnel_id', PersonnelTableName + '.personnel_id')
+   .select()
+   .table(tableName)
+
 exports.getCycleById = async (planning_id) => await DBInstance
    .where({planning_id})
    .select()

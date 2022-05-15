@@ -63,7 +63,7 @@ app.use('/matiere', matiereRoutes)
 app.use('/notification', notificationRoutes)
 app.use('/horaire', horaireRoutes)
 app.use('/personnel', personnelRoutes)
-app.use('/paid_taux', paidTauxRoutes)
+app.use('/paid-taux', paidTauxRoutes)
 app.use('/paiement', paiementRoutes)
 app.use('/planning', planningRoutes)
 

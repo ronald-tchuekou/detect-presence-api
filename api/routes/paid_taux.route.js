@@ -4,6 +4,7 @@ const controller = require("../controllers/paid_taux.controller");
 const router = express.Router()
 
 router.get("/", controller.getAll);
+router.get("/classe", controller.getAllClass);
 router.get("/:id", controller.getOne);
 router.post("/", controller.create);
 router.put("/:id", controller.update);

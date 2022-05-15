@@ -4,7 +4,7 @@ const moment = require("moment");
 exports.create = async (req, res) => {
    try {
       const document = req.body
-      const response = await PaidTauxModel.addCycle(document)
+      const response = await PaidTauxModel.addPaidTaux(document)
       res.json(response)
    } catch (e) {
       res.status(400).json({
@@ -17,10 +17,11 @@ exports.create = async (req, res) => {
 exports.update = async (req, res) => {
    try {
       const document = req.body
-      const response = await PaidTauxModel.updateCycle({
+      const response = await PaidTauxModel.updatePaidTaux({
          ...document,
+         status: 'Complète',
          updated_at: moment().toDate()
-      }, req.params.code)
+      }, req.params.id)
       res.json(response)
    } catch (e) {
       res.status(400).json({
@@ -45,6 +46,18 @@ exports.delete = async (req, res) => {
 exports.getAll = async (req, res) => {
    try {
       const response = await PaidTauxModel.getAllCycles()
+      res.json(response)
+   } catch (e) {
+      res.status(400).json({
+         message: 'Une erreur est survenue !',
+         error: e
+      })
+   }
+}
+
+exports.getAllClass = async (req, res) => {
+   try {
+      const response = await PaidTauxModel.getAllClasses()
       res.json(response)
    } catch (e) {
       res.status(400).json({

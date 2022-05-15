@@ -1,10 +1,16 @@
 const ClasseModel = require('../models/classe.model')
+const PaidTauxModel = require('../models/paid_taux.model')
 const moment = require("moment");
 
 exports.create = async (req, res) => {
    try {
       const document = req.body
       const response = await ClasseModel.addCycle(document)
+      await PaidTauxModel.addPaidTaux({
+         classe_id: response,
+         taux: '',
+         status: 'Attente'
+      })
       res.json(response)
    } catch (e) {
       res.status(400).json({
