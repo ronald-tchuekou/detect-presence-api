@@ -1,10 +1,42 @@
 const PersonnelModel = require('../models/personnel.model')
 const moment = require("moment");
+const bcrypt = require("bcrypt")
+const { mailTransporter } = require('../config/mails')
 
 exports.create = async (req, res) => {
    try {
       const document = req.body
-      const response = await PersonnelModel.addCycle(document)
+      const response = await PersonnelModel.addCycle({
+         ...document,
+         password: bcrypt.hashSync('password', 8),
+         created_token: bcrypt.hashSync('password', 5),
+      })
+
+      console.log(response)
+
+      const mailOptions = {
+         from: '"Detect-Presence" <ronaldtchuekou@gmail.com>',
+         to: req.body.email,
+         cc: req.body.email,
+         bcc: req.body.email,
+         subject: 'Bienvenue dans l\'application Detect-Presence',
+         template: 'account_created',
+         context: {
+            lastname: req.body.lastname,
+            firstname: req.body.firstname,
+            email: req.body.email,
+            password: 'password',
+         }
+      }
+
+      mailTransporter.sendMail(mailOptions, (err, info) => {
+         if (err) {
+            console.log('Error when send the mail: ', err)
+         } else {
+            console.log('The welcome mail is send!', info)
+         }
+      })
+
       res.json(response)
    } catch (e) {
       res.status(400).json({

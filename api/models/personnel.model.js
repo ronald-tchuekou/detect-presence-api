@@ -26,6 +26,14 @@ exports.createTable = () => {
    });
 }
 
+/**
+ * @param document
+ */
+exports.getUser = async (document) => await DBInstance
+   .from(tableName)
+   .where(document)
+   .select()
+
 exports.addCycle = async (document) => await DBInstance
    .from(tableName)
    .insert(document)

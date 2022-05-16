@@ -13,6 +13,7 @@ const paiementRoutes = require('./api/routes/paiement.route')
 const horaireRoutes = require('./api/routes/horaire.route')
 const personnelRoutes = require('./api/routes/personnel.route')
 const planningRoutes = require('./api/routes/planning.route')
+const authRoutes = require('./api/routes/auth.route')
 
 // Get the application.
 const app = express()
@@ -57,6 +58,7 @@ require('./api/models/paiement.model').createTable()
 require('./api/models/planning.model').createTable()
 
 // Routes
+app.use('/auth', authRoutes)
 app.use('/classe', classeRoutes)
 app.use('/cycle', cycleRoutes)
 app.use('/matiere', matiereRoutes)
