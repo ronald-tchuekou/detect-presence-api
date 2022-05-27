@@ -4,9 +4,8 @@
   "description": "Api de l'application de detection de présence dans un établissement scolaire.",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon app.js",
-    "start": "nodemon app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
   "repository": {
     "type": "git",
