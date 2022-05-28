@@ -58,6 +58,9 @@ require('./api/models/paiement.model').createTable()
 require('./api/models/planning.model').createTable()
 
 // Routes
+app.get('/', (req, res) => {
+   res.send('Welcome to api of Detect-Presence application')
+})
 app.use('/auth', authRoutes)
 app.use('/classe', classeRoutes)
 app.use('/cycle', cycleRoutes)
