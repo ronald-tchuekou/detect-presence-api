@@ -26,6 +26,12 @@ exports.createTable = () => {
    });
 }
 
+exports.addImageProfileColumn = async () => {
+   await DBInstance.schema.table(tableName, (table) => {
+      table.text('image_profile').defaultTo('default_image.png')
+   })
+}
+
 /**
  * @param document
  */

@@ -53,6 +53,8 @@ require('./api/models/matiere.model').createTable()
 require('./api/models/notification.model').createTable()
 require('./api/models/period.model').createTable()
 require('./api/models/personnel.model').createTable()
+require('./api/models/personnel.model').addImageProfileColumn().then(() => {
+})
 require('./api/models/paid_taux.model').createTable()
 require('./api/models/paiement.model').createTable()
 require('./api/models/planning.model').createTable()
