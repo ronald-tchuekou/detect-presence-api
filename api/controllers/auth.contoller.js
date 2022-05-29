@@ -47,7 +47,7 @@ exports.login = async (req, res) => {
 
 exports.checkUserEmail = async (req, res) => {
    try {
-      const response = await PersonnelModel.getUser({email: req.body.email})
+      const response = await PersonnelModel.getUser({email: req.params.email})
       if (response.length === 0)
          return res.status(400).send({
             message: 'Aucun personnel ne possède cette adresse e-mail !',
