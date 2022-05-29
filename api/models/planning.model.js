@@ -11,7 +11,7 @@ exports.planningTableName = tableName
 exports.createTable = () => {
    DBInstance.schema.hasTable(tableName).then(function (exists) {
       if (!exists) {
-         const response = DBInstance.schema.createTable(tableName, (table) => {
+         return DBInstance.schema.createTable(tableName, (table) => {
             table.increments("planning_id")
             table.integer('period_id', 10)
                .unsigned()
@@ -41,9 +41,8 @@ exports.createTable = () => {
             table.date('date')
             table.timestamps(true, true, false)
          })
-         console.log('All the tables is created successfully !')
-         return response
       }
+      console.log('All the tables is created successfully !')
    });
 }
 

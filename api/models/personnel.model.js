@@ -31,9 +31,8 @@ exports.addImageProfileColumn = () => {
       if(!exists){
          return DBInstance.schema.table(tableName, (table) => {
             table
-               .text('image_profile')
-               .notNullable()
-               .defaultTo('default_image.png')
+               .string('image_profile', 255)
+               .defaultTo("default_image.png")
          })
       }
    })
