@@ -30,7 +30,20 @@ exports.addImageProfileColumn = () => {
    DBInstance.schema.hasColumn(tableName, 'image_profile').then(function (exists) {
       if(!exists){
          return DBInstance.schema.table(tableName, (table) => {
-            table.text('image_profile').defaultTo('default_image.png')
+            table
+               .text('image_profile')
+               .notNullable()
+               .defaultTo('default_image.png')
+         })
+      }
+   })
+}
+
+exports.dropImageProfileColumn = () => {
+   DBInstance.schema.hasColumn(tableName, 'image_profile').then(function (exists) {
+      if(exists){
+         return DBInstance.schema.table(tableName, (table) => {
+            table.dropColumn('image_profile')
          })
       }
    })
