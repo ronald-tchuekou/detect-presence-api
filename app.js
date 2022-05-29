@@ -14,6 +14,7 @@ const horaireRoutes = require('./api/routes/horaire.route')
 const personnelRoutes = require('./api/routes/personnel.route')
 const planningRoutes = require('./api/routes/planning.route')
 const authRoutes = require('./api/routes/auth.route')
+const fileRoutes = require('./api/routes/files.route')
 
 // Get the application.
 const app = express()
@@ -73,6 +74,7 @@ app.use('/personnel', personnelRoutes)
 app.use('/paid-taux', paidTauxRoutes)
 app.use('/paiement', paiementRoutes)
 app.use('/planning', planningRoutes)
+app.use('/files', fileRoutes)
 
 // Server listening.
 const port = process.env.PORT || 3000;

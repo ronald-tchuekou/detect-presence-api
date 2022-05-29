@@ -4,49 +4,47 @@
  * @email ronaldtchuekou@gmail.com
  */
 
+const express = require('express')
 const upload = require('../utils/upload')
 const controller = require('../controllers/file.controller')
 const {authJwt} = require('../middlewares')
 
-module.exports = function (app) {
-   app.use(function (req, res, next) {
-      res.header('Access-Control-Allow-Headers', 'x-access-token, Origin, Content-Type, Accept')
-      next()
-   })
+const router = express.Router()
 
-   app.post(
-      '/files/avatar',
-      [authJwt.verifyToken, upload.avatarUpload.single('file')],
-      controller.createFile,
-      (err, req, res) => {
-         res.status(400).send({message: err.message})
-      }
-   )
-   app.put(
-      '/files/avatar',
-      [authJwt.verifyToken, upload.avatarUpload.single('file')],
-      controller.updateFile,
-      (err, req, res) => {
-         res.status(400).send({message: err.message})
-      }
-   )
-   app.post(
-      '/files/message',
-      [authJwt.verifyToken, upload.messageUpload.single('file')],
-      controller.createFile,
-      (err, req, res) => {
-         res.status(400).send({message: err.message})
-      }
-   )
-   app.put(
-      '/files/message',
-      [authJwt.verifyToken, upload.messageUpload.single('file')],
-      controller.updateFile,
-      (err, req, res) => {
-         res.status(400).send({message: err.message})
-      }
-   )
-   app.delete('/files', [authJwt.verifyToken], controller.deleteFile)
-   app.get('/files', controller.getFile)
-   app.get('/assets/:filename', controller.getAssetsFiels)
-}
+router.post(
+   '/avatar',
+   [authJwt.verifyToken, upload.avatarUpload.single('file')],
+   controller.createFile,
+   (err, req, res) => {
+      res.status(400).send({message: err.message})
+   }
+)
+router.put(
+   '/avatar',
+   [authJwt.verifyToken, upload.avatarUpload.single('file')],
+   controller.updateFile,
+   (err, req, res) => {
+      res.status(400).send({message: err.message})
+   }
+)
+router.post(
+   '/message',
+   [authJwt.verifyToken, upload.messageUpload.single('file')],
+   controller.createFile,
+   (err, req, res) => {
+      res.status(400).send({message: err.message})
+   }
+)
+router.put(
+   '/message',
+   [authJwt.verifyToken, upload.messageUpload.single('file')],
+   controller.updateFile,
+   (err, req, res) => {
+      res.status(400).send({message: err.message})
+   }
+)
+router.delete('/', [authJwt.verifyToken], controller.deleteFile)
+router.get('/', controller.getFile)
+router.get('/assets/:filename', controller.getAssetsFiels)
+
+module.exports = router
