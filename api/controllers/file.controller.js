@@ -17,7 +17,7 @@ exports.getFile = async (req, res) => {
    try {
       const bucket = req.query.bucket
       const filename = req.query.filename
-      const file = `${__dirname}/../../uploads/${bucket}/${filename}`
+      const file = `${__dirname}/../../public/${bucket}/${filename}`
       res.download(file)
    } catch (e) {
       res.status(400).send({message: 'Une erreur est survenu lors de la suppression du fichier.'})
