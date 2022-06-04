@@ -37,20 +37,10 @@ exports.getAllCycles = async () => await DBInstance
    .select()
    .table(tableName)
 
-exports.getAllClasses = async () => {
-   let classes = await DBInstance
-      .table(ClasseTableName)
-      .select()
-   classes = classes.map(async item => {
-      const taux = await DBInstance
-         .where({classe_id: item.classe_id})
-         .select()
-         .table(tableName)
-
-      return {...item, taux: taux.length === 0 ? {} : taux[0]}
-   })
-   return classes
-}
+exports.getAllClasses = async () => await DBInstance
+   .table(ClasseTableName)
+   .join(tableName, ClasseTableName + '.classe_id' ,'=', tableName + '.classe_id')
+   .select()
 
 exports.getCycleById = async (paid_taux_id) => await DBInstance
    .where({paid_taux_id})
