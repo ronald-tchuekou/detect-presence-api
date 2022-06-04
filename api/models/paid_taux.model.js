@@ -41,12 +41,13 @@ exports.getAllClasses = async () => {
    let classes = await DBInstance
       .table(ClasseTableName)
       .select()
-   classes = classes.map(item => {
-      const taux = DBInstance
-         .table(tableName)
+   classes = classes.map(async item => {
+      const taux = await DBInstance
          .where({classe_id: item.classe_id})
          .select()
-      return {...item, taux: taux.length === 0 ? null : taux[0]}
+         .table(tableName)
+
+      return {...item, taux: taux.length === 0 ? {} : taux[0]}
    })
    return classes
 }
