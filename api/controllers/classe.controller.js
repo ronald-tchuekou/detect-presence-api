@@ -8,7 +8,7 @@ exports.create = async (req, res) => {
       const response = await ClasseModel.addCycle(document)
       await PaidTauxModel.addPaidTaux({
          classe_id: response,
-         taux: '',
+         taux: '0',
          status: 'Attente'
       })
       res.json(response)
