@@ -40,7 +40,6 @@ exports.getAllCycles = async () => await DBInstance
 exports.getAllClasses = async () => {
    let classes = await DBInstance
       .table(ClasseTableName)
-      .join(tableName, ClasseTableName + '.classe_id', '=', tableName + '.classe_id')
       .select()
    classes = classes.map(item => {
       const taux = DBInstance
