@@ -56,7 +56,7 @@ exports.getAll = async (req, res) => {
 
 exports.getClassePlanning = async (req, res) => {
    try {
-      const response = await PlanningModel.getClassePlanning(req.params.id)
+      const response = await PlanningModel.getClassePlanning(req.params.id, req.query.start_date, req.query.end_date)
       res.json(response)
    } catch (e) {
       res.status(400).json({
