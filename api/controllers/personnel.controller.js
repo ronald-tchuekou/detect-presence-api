@@ -49,7 +49,10 @@ exports.create = async (req, res) => {
 exports.cardCodeDetection = async (req, res) => {
    try {
       // TODO manage to do right thing.
-      res.json(req.body)
+      res.json({
+         status: 'OK',
+         data: req.body
+      })
    } catch (e) {
       res.status(400).json({
          message: 'Une erreur est survenue !',
