@@ -66,8 +66,12 @@ exports.updateCycle = async (document, personnel_id) => await DBInstance
    .update(document)
 
 exports.getAllCycles = async () => await DBInstance
+   .where('role', '!=' , 'Admin')
    .select()
    .table(tableName)
+
+exportsgetPersonnels = async() => await DBInstance
+   .select()
 
 exports.getCycleById = async (id) => await DBInstance
    .where({personnel_id: id})

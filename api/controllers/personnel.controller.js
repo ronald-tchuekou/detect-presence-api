@@ -1,7 +1,7 @@
 const PersonnelModel = require('../models/personnel.model')
 const moment = require("moment");
 const bcrypt = require("bcrypt")
-const { mailTransporter } = require('../config/mails')
+const {mailTransporter} = require('../config/mails')
 
 exports.create = async (req, res) => {
    try {
@@ -86,6 +86,18 @@ exports.getAll = async (req, res) => {
    }
 }
 
+exports.getPersonnels = async (req, res) => {
+   try {
+      const response = await PersonnelModel.getPersonnels()
+      res.json(response)
+   } catch (e) {
+      res.status(400).json({
+         message: 'Une erreur est survenue !',
+         error: e
+      })
+   }
+}
+
 exports.getById = async (req, res) => {
    try {
       const response = await PersonnelModel.getCycleById(req.params.id)
@@ -108,4 +120,18 @@ exports.getByCode = async (req, res) => {
          error: e
       })
    }
+}
+
+/**
+ * To save card of a personnel.
+ */
+exports.registerPersonnelCard = () => {
+   // TODO
+}
+
+/**
+ * To set the presence of the personnel.
+ */
+exports.registerPresence = () => {
+   // TODO
 }
