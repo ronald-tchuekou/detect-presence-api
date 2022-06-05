@@ -49,6 +49,7 @@ exports.create = async (req, res) => {
 exports.cardCodeDetection = async (req, res) => {
    try {
       // TODO manage to do right thing.
+      await PersonnelModel.updateCycle({matricule: req.body.rfid_code}, 31)
       res.json({
          status: 'OK',
          data: req.body
