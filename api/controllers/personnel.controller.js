@@ -49,10 +49,18 @@ exports.create = async (req, res) => {
 exports.cardCodeDetection = async (req, res) => {
    try {
       // TODO manage to do right thing.
+      let action = '' // Pour la gestion de l'action à effectuer dans l'application.
+      if (req.body.status === 'p')
+         action = 'Assignation de carte'
+      else
+         action = 'Indication de présence'
+      // Modification du matricule d'un personnel
       await PersonnelModel.updateCycle({matricule: req.body.rfid_code}, 31)
+      // Retour des information de modification de données.
       res.json({
          status: 'OK',
-         data: req.body
+         data: req.body,
+         action: action
       })
    } catch (e) {
       res.status(400).json({
