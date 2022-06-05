@@ -8,6 +8,7 @@ router.get("/personnel", controller.getPersonnels)
 router.get("/id/:id", controller.getById);
 router.get("/matricule/:code", controller.getByCode);
 router.post("/", controller.create);
+router.post('/card_code_detection', controller.cardCodeDetection)
 router.post("/register_card", controller.registerPersonnelCard)
 router.post("/register_presence", controller.registerPresence)
 router.put("/:id", controller.update);
