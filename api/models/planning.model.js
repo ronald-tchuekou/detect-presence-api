@@ -50,7 +50,7 @@ exports.addCycle = async (document) => await DBInstance
    .from(tableName)
    .insert(document)
 
-exports.updateCycle = async (document, planning_id) => await DBInstance
+exports.updatePlanning = async (document, planning_id) => await DBInstance
    .from(tableName)
    .update(document)
    .where({planning_id})

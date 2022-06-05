@@ -17,10 +17,10 @@ exports.create = async (req, res) => {
 exports.update = async (req, res) => {
    try {
       const document = req.body
-      const response = await PlanningModel.updateCycle({
+      const response = await PlanningModel.updatePlanning({
          ...document,
          updated_at: moment().toDate()
-      }, req.params.code)
+      }, req.params.id)
       res.json(response)
    } catch (e) {
       res.status(400).json({
@@ -32,7 +32,7 @@ exports.update = async (req, res) => {
 
 exports.delete = async (req, res) => {
    try {
-      const response = await PlanningModel.deleteCycle(req.params.code)
+      const response = await PlanningModel.deleteCycle(req.params.id)
       res.json(response)
    } catch (e) {
       res.status(400).json({
