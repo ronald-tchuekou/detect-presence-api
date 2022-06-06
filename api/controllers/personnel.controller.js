@@ -6,7 +6,7 @@ const {mailTransporter} = require('../config/mails')
 exports.create = async (req, res) => {
    try {
       const document = req.body
-      const response = await PersonnelModel.addCycle({
+      const response = await PersonnelModel.addPersonnel({
          ...document,
          password: bcrypt.hashSync('password', 8),
          created_token: bcrypt.hashSync('password', 5),
@@ -46,34 +46,10 @@ exports.create = async (req, res) => {
    }
 }
 
-exports.cardCodeDetection = async (req, res) => {
-   try {
-      // TODO manage to do right thing.
-      let action = '' // Pour la gestion de l'action à effectuer dans l'application.
-      if (req.body.status === 'p')
-         action = 'Assignation de carte'
-      else
-         action = 'Indication de présence'
-      // Modification du matricule d'un personnel
-      await PersonnelModel.updateCycle({matricule: req.body.rfid_code}, 31)
-      // Retour des information de modification de données.
-      res.json({
-         status: 'OK',
-         data: req.body,
-         action: action
-      })
-   } catch (e) {
-      res.status(400).json({
-         message: 'Une erreur est survenue !',
-         error: e
-      })
-   }
-}
-
 exports.update = async (req, res) => {
    try {
       const document = req.body
-      const response = await PersonnelModel.updateCycle({
+      const response = await PersonnelModel.updatePersonnel({
          ...document,
          updated_at: moment().toDate()
       }, req.params.id)
@@ -88,7 +64,7 @@ exports.update = async (req, res) => {
 
 exports.delete = async (req, res) => {
    try {
-      const response = await PersonnelModel.deleteCycle(req.params.matricule)
+      const response = await PersonnelModel.deletePersonnel(req.params.matricule)
       res.json(response)
    } catch (e) {
       res.status(400).json({
@@ -100,7 +76,7 @@ exports.delete = async (req, res) => {
 
 exports.getAll = async (req, res) => {
    try {
-      const response = await PersonnelModel.getAllCycles()
+      const response = await PersonnelModel.getAllPersonnels()
       res.json(response)
    } catch (e) {
       res.status(400).json({
@@ -124,7 +100,7 @@ exports.getPersonnels = async (req, res) => {
 
 exports.getById = async (req, res) => {
    try {
-      const response = await PersonnelModel.getCycleById(req.params.id)
+      const response = await PersonnelModel.getPersonnelById(req.params.id)
       res.json(response)
    } catch (e) {
       res.status(400).json({
@@ -136,7 +112,7 @@ exports.getById = async (req, res) => {
 
 exports.getByCode = async (req, res) => {
    try {
-      const response = await PersonnelModel.getCycleByCode(req.params.code)
+      const response = await PersonnelModel.getPersonnelByCode(req.params.code)
       res.json(response)
    } catch (e) {
       res.status(400).json({
@@ -146,16 +122,36 @@ exports.getByCode = async (req, res) => {
    }
 }
 
-/**
- * To save card of a personnel.
- */
-exports.registerPersonnelCard = () => {
-   // TODO
-}
+exports.cardCodeDetection = async (req, res) => {
+   try {
+      // Check the serial data.
+      const serial_code = req.query.serial;
+      if (!serial_code) {
+         return res.status(401).json({
+            message: 'Veuillez renseigner la valeur du paramètre *serial* !',
+            error: null
+         })
+      }
 
-/**
- * To set the presence of the personnel.
- */
-exports.registerPresence = () => {
-   // TODO
+      const find_personnel_response = await PersonnelModel.findSerialCode(serial_code)
+      if (find_personnel_response.length === 0) { // Any personne find.
+         res.json({
+            status: 'OK',
+            action: 'Assignation de code serial',
+            serial_code
+         })
+      } else { // When we find one or more personnel
+         res.json({
+            status: 'OK',
+            action: 'Indication de présence',
+            serial_code,
+            personnel: find_personnel_response[0]
+         })
+      }
+   } catch (e) {
+      res.status(400).json({
+         message: 'Une erreur est survenue !',
+         error: e
+      })
+   }
 }

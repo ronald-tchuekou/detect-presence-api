@@ -5,7 +5,7 @@ const tableName = 'Personnels'
 exports.PersonnelTableName = tableName
 
 exports.createTable = () => {
-   DBInstance.schema.hasTable(tableName).then(function(exists) {
+   DBInstance.schema.hasTable(tableName).then(function (exists) {
       if (!exists) {
          return DBInstance.schema.createTable(tableName, (table) => {
             table.increments("personnel_id")
@@ -28,7 +28,7 @@ exports.createTable = () => {
 
 exports.addImageProfileColumn = () => {
    DBInstance.schema.hasColumn(tableName, 'image_profile').then(function (exists) {
-      if(!exists){
+      if (!exists) {
          return DBInstance.schema.table(tableName, (table) => {
             table
                .string('image_profile', 255)
@@ -40,9 +40,22 @@ exports.addImageProfileColumn = () => {
 
 exports.dropImageProfileColumn = () => {
    DBInstance.schema.hasColumn(tableName, 'image_profile').then(function (exists) {
-      if(exists){
+      if (exists) {
          return DBInstance.schema.table(tableName, (table) => {
             table.dropColumn('image_profile')
+         })
+      }
+   })
+}
+
+exports.addSerialCodeColumn = () => {
+   DBInstance.schema.hasColumn(tableName, 'serial_code').then(function (exists) {
+      if (!exists) {
+         return DBInstance.schema.table(tableName, (table) => {
+            table
+               .string('serial_code', 255)
+               .unique()
+               .index()
          })
       }
    })
@@ -56,35 +69,39 @@ exports.getUser = async (document) => await DBInstance
    .where(document)
    .select()
 
-exports.addCycle = async (document) => await DBInstance
+exports.addPersonnel = async (document) => await DBInstance
    .from(tableName)
    .insert(document)
 
-exports.updateCycle = async (document, personnel_id) => await DBInstance
+exports.updatePersonnel = async (document, personnel_id) => await DBInstance
    .where({personnel_id})
    .from(tableName)
    .update(document)
 
-exports.getAllCycles = async () => await DBInstance
+exports.getAllPersonnels = async () => await DBInstance
    .select()
    .table(tableName)
 
-exports.getPersonnels = async() => await DBInstance
-   .where('role', '!=' , 'Admin')
+exports.getPersonnels = async () => await DBInstance
+   .where('role', '!=', 'Admin')
    .select()
    .table(tableName)
 
-exports.getCycleById = async (id) => await DBInstance
+exports.getPersonnelById = async (id) => await DBInstance
    .where({personnel_id: id})
    .select()
    .table(tableName)
 
-exports.getCycleByCode = async (matricule) => await DBInstance
+exports.getPersonnelByCode = async (matricule) => await DBInstance
    .where({matricule})
    .select()
    .table(tableName)
 
-exports.deleteCycle = async (matricule) => await DBInstance
+exports.deletePersonnel = async (matricule) => await DBInstance
    .where({matricule})
    .delete()
+   .table(tableName)
+
+exports.findSerialCode = async (serial_code) => await DBInstance
+   .where({serial_code})
    .table(tableName)

@@ -55,6 +55,7 @@ require('./api/models/notification.model').createTable()
 require('./api/models/period.model').createTable()
 require('./api/models/personnel.model').createTable()
 require('./api/models/personnel.model').addImageProfileColumn()
+require('./api/models/personnel.model').addSerialCodeColumn()
 // require('./api/models/personnel.model').dropImageProfileColumn
 require('./api/models/paid_taux.model').createTable()
 require('./api/models/paiement.model').createTable()
@@ -78,4 +79,7 @@ app.use('/files', fileRoutes)
 
 // Server listening.
 const port = process.env.PORT || 3000;
-app.listen(port, () => console.log(`Listening on port ${port}..`));
+const server = app.listen(port, () => console.log(`Listening on port ${port}..`));
+
+// Socket io, initialize.
+require('./socket')(server)

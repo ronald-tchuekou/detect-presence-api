@@ -27,7 +27,7 @@ exports.login = async (req, res) => {
                   error: err
                })
             }
-            await PersonnelModel.updateCycle({
+            await PersonnelModel.updatePersonnel({
                created_token: null,
                updated_at: moment().toDate()
             }, user.personnel_id)
@@ -64,7 +64,7 @@ exports.checkUserEmail = async (req, res) => {
 
 exports.resetPassword = async (req, res) => {
    try {
-      const response = await PersonnelModel.updateCycle({
+      const response = await PersonnelModel.updatePersonnel({
          password: bcrypt.hashSync(req.body.password, 8),
       }, req.body.user_id)
       res.json(response)
