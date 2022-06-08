@@ -9,12 +9,12 @@ const hbs = require('nodemailer-express-handlebars')
 const path = require('path')
 
 const mailT = nodeMailer.createTransport({
-   host: 'smtp.gmail.com',
-   port: 465,
+   host: process.env.SMTP_HOST,
+   port: process.env.SMTP_PORT,
    secure: true,
    auth: {
-      user: 'hello@bigoodee.com',
-      pass: 'WellcomeMailBigoodee'
+      user: process.env.SMTP_AUTH_USER,
+      pass: process.env.SMTP_AUTH_PASS
    }
 })
 
