@@ -22,5 +22,9 @@ module.exports = (server) => {
       socket.on('disconnect', () => {
          console.log('User disconnected!')
       })
+
+      socket.on('serial-detect', (data) => {
+         io.emit('serial-detect', data)
+      })
    })
 }

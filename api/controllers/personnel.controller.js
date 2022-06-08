@@ -1,6 +1,7 @@
 const PersonnelModel = require('../models/personnel.model')
 const moment = require("moment");
 const bcrypt = require("bcrypt")
+const socket = require("../config/socket-client.config")
 const {mailTransporter} = require('../config/mails')
 
 exports.create = async (req, res) => {
@@ -135,12 +136,21 @@ exports.cardCodeDetection = async (req, res) => {
 
       const find_personnel_response = await PersonnelModel.findSerialCode(serial_code)
       if (find_personnel_response.length === 0) { // Any personne find.
+         socket.emit('serial-detect', {
+            serial_code,
+            is_first: true
+         })
          res.json({
             status: 'OK',
             action: 'Assignation de code serial',
             serial_code
          })
       } else { // When we find one or more personnel
+         socket.emit('serial-detect', {
+            serial_code,
+            is_first: false,
+            personnel: find_personnel_response[0]
+         })
          res.json({
             status: 'OK',
             action: 'Indication de présence',
