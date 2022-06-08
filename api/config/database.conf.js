@@ -6,10 +6,15 @@ const knex = require('knex')
 exports.getDBInstance = () => knex({
    client: 'mysql',
    connection: {
-      host: 'eu-cdbr-west-02.cleardb.net',
+   //    host: 'eu-cdbr-west-02.cleardb.net',
+   //    port: 3306,
+   //    user: 'b6fd8f95cd3521',
+   //    password: '5c965d14',
+   //    database: "heroku_dc1a5f9ebf1faef"
+      host: 'ee55f0b.online-server.cloud',
       port: 3306,
-      user: 'b6fd8f95cd3521',
-      password: '5c965d14',
-      database: "heroku_dc1a5f9ebf1faef"
+      user: 'roncoder',
+      password: 'password',
+      database: "detect_presence",
    }
 })

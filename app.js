@@ -48,8 +48,8 @@ app.use((
 app.use(express.static(__dirname + '/public'))
 
 // Connection for mysql database.
-require('./api/models/classe.model').createTable()
 require('./api/models/cycle.model').createTable()
+require('./api/models/classe.model').createTable()
 require('./api/models/matiere.model').createTable()
 require('./api/models/notification.model').createTable()
 require('./api/models/period.model').createTable()
