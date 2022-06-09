@@ -1,8 +1,9 @@
 const PersonnelModel = require('../models/personnel.model')
 const moment = require("moment");
 const bcrypt = require("bcrypt")
-const socket = require("../config/socket-client.config")
 const {mailTransporter} = require('../config/mails')
+const notifications = require('../config/notification')
+const SessionsModel = require('../models/session.model')
 
 exports.create = async (req, res) => {
    try {
@@ -124,6 +125,8 @@ exports.getByCode = async (req, res) => {
 }
 
 exports.cardCodeDetection = async (req, res) => {
+   const socket = require("../config/socket-client.config")
+
    try {
       // Check the serial data.
       const serial_code = req.query.serial;
@@ -151,6 +154,20 @@ exports.cardCodeDetection = async (req, res) => {
             is_first: false,
             personnel: find_personnel_response[0]
          })
+         const p = find_personnel_response[0]
+         await notifications.sendNotificationPush(
+            p.notify_token ? [p.notify_token] : [],
+            'Initialisation / Cloture de sessions',
+            'Vous avez Initialisez/Clôturé une sessions pour votre programme.'
+         )
+         socket.emit('notify', {
+            title: `${p.sex === 'F' ? 'Md' : 'Mr'} ${p.lastname + ' ' + p.firstname}`,
+            content: `Initialisation / Clôture de session.`
+         })
+         await SessionsModel.addSession({
+            personnel_id: p.personnel_id,
+            begin: moment().toDate()
+         })
          res.json({
             status: 'OK',
             action: 'Indication de présence',
@@ -159,6 +176,7 @@ exports.cardCodeDetection = async (req, res) => {
          })
       }
    } catch (e) {
+      console.log(e)
       res.status(400).json({
          message: 'Une erreur est survenue !',
          error: e

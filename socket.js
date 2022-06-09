@@ -5,6 +5,7 @@
  */
 
 const socket = require('socket.io')
+const NotificationsController = require('./api/models/notification.model')
 
 module.exports = (server) => {
    let io = socket(server, {
@@ -25,6 +26,12 @@ module.exports = (server) => {
 
       socket.on('serial-detect', (data) => {
          io.emit('serial-detect', data)
+      })
+
+      socket.on('notify', async (data) => {
+         const ids = await NotificationsController.addCycle(data)
+         const response = await NotificationsController.getCycleById(ids[0])
+         io.emit('notify', response[0])
       })
    })
 }

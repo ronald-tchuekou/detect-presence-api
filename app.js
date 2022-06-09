@@ -16,6 +16,7 @@ const personnelRoutes = require('./api/routes/personnel.route')
 const planningRoutes = require('./api/routes/planning.route')
 const authRoutes = require('./api/routes/auth.route')
 const fileRoutes = require('./api/routes/files.route')
+const sessionRoutes = require('./api/routes/session.route')
 
 // Get the application.
 const app = express()
@@ -57,7 +58,9 @@ require('./api/models/period.model').createTable()
 require('./api/models/personnel.model').createTable()
 require('./api/models/personnel.model').addImageProfileColumn()
 require('./api/models/personnel.model').addSerialCodeColumn()
+require('./api/models/personnel.model').addNotificationTokenCodeColumn()
 // require('./api/models/personnel.model').dropImageProfileColumn
+require('./api/models/session.model').createTable()
 require('./api/models/paid_taux.model').createTable()
 require('./api/models/paiement.model').createTable()
 require('./api/models/planning.model').createTable()
@@ -77,6 +80,7 @@ app.use('/paid-taux', paidTauxRoutes)
 app.use('/paiement', paiementRoutes)
 app.use('/planning', planningRoutes)
 app.use('/files', fileRoutes)
+app.use('/session', sessionRoutes)
 
 // Server listening.
 const port = process.env.PORT || 3000;

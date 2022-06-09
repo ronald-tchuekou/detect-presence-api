@@ -30,12 +30,12 @@ exports.sendNotificationPush = async (tokens, title, body, data) => {
             title: title,
             body: body,
             priority: 'high',
-            subtitle: 'app.bigoodee.com',
+            subtitle: 'detect-presence',
             sound: 'default',
             badge: 1,
-            channelId: 'bigoodeeChannelNotificationId',
+            channelId: 'detectChannelNotificationId',
             data: data,
-            lightColor: '#FF3E79'
+            lightColor: '#004e9b'
          })
       }
       const chunks = expo.chunkPushNotifications(messages)

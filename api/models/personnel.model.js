@@ -61,6 +61,19 @@ exports.addSerialCodeColumn = () => {
    })
 }
 
+exports.addNotificationTokenCodeColumn = () => {
+   DBInstance.schema.hasColumn(tableName, 'notify_token').then(function (exists) {
+      if (!exists) {
+         return DBInstance.schema.table(tableName, (table) => {
+            table
+               .string('notify_token', 255)
+               .unique()
+               .index()
+         })
+      }
+   })
+}
+
 /**
  * @param document
  */

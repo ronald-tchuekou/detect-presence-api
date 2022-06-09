@@ -31,7 +31,7 @@ exports.getAllCycles = async () => await DBInstance
    .table(tableName)
 
 exports.getCycleById = async (id) => await DBInstance
-   .where({classe_id: id})
+   .where({notification_id: id})
    .select()
    .table(tableName)
 
