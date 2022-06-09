@@ -64,8 +64,18 @@ exports.getAllCycles = async () => await DBInstance
 exports.getAllPersonnelPlanning = async (personnel_id) => await DBInstance
    .where(tableName +'.personnel_id', '=', personnel_id)
    .join(MatiereTableName, tableName+'.matiere_id', MatiereTableName + '.matiere_id')
+   .join(ClasseTableName, tableName+'.classe_id', ClasseTableName + '.classe_id')
    .join(PersonnelTableName, tableName+'.personnel_id', PersonnelTableName + '.personnel_id')
-   .select()
+   .join(PeriodTableName, tableName+'.period_id', PeriodTableName + '.period_id')
+   .select(
+      tableName+".*",
+      MatiereTableName+".label as matiere",
+      MatiereTableName+".code as matiere_code",
+      ClasseTableName+".label as classe",
+      ClasseTableName+".code as classe_code",
+      PeriodTableName+".*"
+   )
+   .orderBy('date', 'DESC')
    .table(tableName)
 
 exports.getClassePlanning = async (classe_id, start_date, end_date) => await DBInstance
