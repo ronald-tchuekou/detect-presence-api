@@ -56,6 +56,15 @@ exports.updatePlanning = async (document, planning_id) => await DBInstance
    .where({planning_id})
 
 exports.getAllCycles = async () => await DBInstance
+   .join(MatiereTableName, tableName+'.matiere_id', MatiereTableName + '.matiere_id')
+   .join(PersonnelTableName, tableName+'.personnel_id', PersonnelTableName + '.personnel_id')
+   .select()
+   .table(tableName)
+
+exports.getAllPersonnelPlanning = async (personnel_id) => await DBInstance
+   .where({personnel_id})
+   .join(MatiereTableName, tableName+'.matiere_id', MatiereTableName + '.matiere_id')
+   .join(PersonnelTableName, tableName+'.personnel_id', PersonnelTableName + '.personnel_id')
    .select()
    .table(tableName)
 
