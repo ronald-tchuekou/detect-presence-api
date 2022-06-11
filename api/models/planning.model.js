@@ -130,7 +130,8 @@ exports.getCurrentDayPersonnelWaitingPlanning = async (personnel_id) => await DB
       MatiereTableName + ".code as matiere_code",
       ClasseTableName + ".label as classe",
       ClasseTableName + ".code as classe_code",
-      PeriodTableName + ".*"
+      PeriodTableName + ".*",
+      PersonnelTableName + '.*'
    )
    .table(tableName)
 
@@ -151,7 +152,8 @@ exports.getCurrentDayPersonnelInCoursePlanning = async (personnel_id) => await D
       MatiereTableName + ".code as matiere_code",
       ClasseTableName + ".label as classe",
       ClasseTableName + ".code as classe_code",
-      PeriodTableName + ".*"
+      PeriodTableName + ".*",
+      PersonnelTableName + '.*'
    )
    .table(tableName)
 
@@ -162,7 +164,8 @@ exports.getAllPersonnelPlanning = async (personnel_id) => await DBInstance
       MatiereTableName + ".code as matiere_code",
       ClasseTableName + ".label as classe",
       ClasseTableName + ".code as classe_code",
-      PeriodTableName + ".*"
+      PeriodTableName + ".*",
+      PersonnelTableName + '.*'
    )
    .join(MatiereTableName, tableName + '.matiere_id', MatiereTableName + '.matiere_id')
    .join(ClasseTableName, tableName + '.classe_id', ClasseTableName + '.classe_id')
