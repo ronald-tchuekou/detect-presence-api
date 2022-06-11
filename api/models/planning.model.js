@@ -121,8 +121,8 @@ exports.getCurrentDayPersonnelWaitingPlanning = async (personnel_id) => await DB
    .join(PeriodTableName, tableName + '.period_id', PeriodTableName + '.period_id')
    .where(tableName + '.personnel_id', '=', personnel_id)
    .where('date', '=', moment().format('YYYY-MM-DD'))
-   .where('begin', '>=', moment().add(-35, 'minutes').format('HH:mm'))
-   .where('begin', '<=', moment().add(35, 'minutes').format('HH:mm'))
+   .where('begin', '>=', moment().add(-60, 'minutes').format('HH:mm'))
+   .where('begin', '<=', moment().add(60, 'minutes').format('HH:mm'))
    .where(tableName + '.status', '=', 'WAITING')
    .select(
       tableName + ".*",
@@ -142,7 +142,7 @@ exports.getCurrentDayPersonnelInCoursePlanning = async (personnel_id) => await D
    .where(tableName + '.personnel_id', '=', personnel_id)
    .where('date', '=', moment().format('YYYY-MM-DD'))
    .where('end', '<', moment().format('HH:mm'))
-   .where('end', '>=', moment().add(-35, 'minutes').format('HH:mm'))
+   .where('end', '>=', moment().add(-60, 'minutes').format('HH:mm'))
    .where(tableName + '.status', '=', 'IN_COURSE')
    .select(
       tableName + ".*",
