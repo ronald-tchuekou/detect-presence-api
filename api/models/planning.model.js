@@ -89,7 +89,8 @@ exports.getCurrentDayInCoursePlanning = async () => await DBInstance
       MatiereTableName + ".code as matiere_code",
       ClasseTableName + ".label as classe",
       ClasseTableName + ".code as classe_code",
-      PeriodTableName + ".*"
+      PeriodTableName + ".*",
+      PersonnelTableName + '.*'
    )
    .join(MatiereTableName, tableName + '.matiere_id', MatiereTableName + '.matiere_id')
    .join(ClasseTableName, tableName + '.classe_id', ClasseTableName + '.classe_id')
