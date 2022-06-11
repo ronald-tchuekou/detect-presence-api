@@ -36,12 +36,12 @@ exports.getCycleById = async (id) => await DBInstance
    .select()
    .table(tableName)
 
-exports.getCycleByCode = async (code) => await DBInstance
-   .where({code: code})
+exports.getCycleByCode = async (period_id) => await DBInstance
+   .where({period_id})
    .select()
    .table(tableName)
 
-exports.deleteCycle = async (code) => await DBInstance
-   .where({code})
+exports.deleteCycle = async (period_id) => await DBInstance
+   .where({period_id})
    .delete()
    .table(tableName)
