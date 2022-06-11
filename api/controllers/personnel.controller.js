@@ -169,6 +169,7 @@ const newPresenceDetected = async (personnel) => {
          send = true
       }
    }
+
    if(send){
       await notifications.sendNotificationPush(
          personnel.notify_token ? [personnel.notify_token] : [],
