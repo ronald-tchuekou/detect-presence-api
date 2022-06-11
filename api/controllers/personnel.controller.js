@@ -135,6 +135,7 @@ const newPresenceDetected = async (personnel) => {
    let planning = {}
 
    const plannings = await PlanningModel.getCurrentDayPersonnelInCoursePlanning(personnel.personnel_id)
+   console.log('Planning : ', plannings)
    if(plannings.length !== 0){
       const current = plannings[0]
       planning = current
@@ -151,6 +152,7 @@ const newPresenceDetected = async (personnel) => {
       send = true
    }else{
       const plan = await PlanningModel.getCurrentDayPersonnelWaitingPlanning(personnel.personnel_id)
+      console.log('Plan : ', plan)
       if(plan.length !== 0){
          const current = plan[0]
          planning = current
