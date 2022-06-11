@@ -100,6 +100,40 @@ exports.getCurrentDayInCoursePlanning = async () => await DBInstance
    .where(tableName + '.status', '=', 'IN_COURSE')
    .table(tableName)
 
+exports.getCurrentInCoursePlanning = async () => await DBInstance
+   .select(
+      tableName + ".*",
+      MatiereTableName + ".label as matiere",
+      MatiereTableName + ".code as matiere_code",
+      ClasseTableName + ".label as classe",
+      ClasseTableName + ".code as classe_code",
+      PeriodTableName + ".*",
+      PersonnelTableName + '.*'
+   )
+   .join(MatiereTableName, tableName + '.matiere_id', MatiereTableName + '.matiere_id')
+   .join(ClasseTableName, tableName + '.classe_id', ClasseTableName + '.classe_id')
+   .join(PersonnelTableName, tableName + '.personnel_id', PersonnelTableName + '.personnel_id')
+   .join(PeriodTableName, tableName + '.period_id', PeriodTableName + '.period_id')
+   .where(tableName + '.status', '=', 'IN_COURSE')
+   .table(tableName)
+
+exports.getCurrentCompletPlanning = async () => await DBInstance
+   .select(
+      tableName + ".*",
+      MatiereTableName + ".label as matiere",
+      MatiereTableName + ".code as matiere_code",
+      ClasseTableName + ".label as classe",
+      ClasseTableName + ".code as classe_code",
+      PeriodTableName + ".*",
+      PersonnelTableName + '.*'
+   )
+   .join(MatiereTableName, tableName + '.matiere_id', MatiereTableName + '.matiere_id')
+   .join(ClasseTableName, tableName + '.classe_id', ClasseTableName + '.classe_id')
+   .join(PersonnelTableName, tableName + '.personnel_id', PersonnelTableName + '.personnel_id')
+   .join(PeriodTableName, tableName + '.period_id', PeriodTableName + '.period_id')
+   .where(tableName + '.status', '=', 'COMPLET')
+   .table(tableName)
+
 exports.getCurrentDayPersonnelInCoursePlanning = async (personnel_id) => await DBInstance
    .select(
       tableName + ".*",
