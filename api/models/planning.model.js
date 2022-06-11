@@ -142,7 +142,7 @@ exports.getClassePlanning = async (classe_id, start_date, end_date) => await DBI
    .join(PersonnelTableName, tableName + '.personnel_id', PersonnelTableName + '.personnel_id')
    .where({classe_id})
    .where('date', '>=', start_date)
-   .where('date', '<', end_date)
+   .where('date', '<=', end_date)
    .table(tableName)
 
 exports.getCycleById = async (planning_id) => await DBInstance
