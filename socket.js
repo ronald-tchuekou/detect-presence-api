@@ -34,7 +34,7 @@ module.exports = (server) => {
          io.emit('notify', response[0])
       })
 
-      socket.on('session-detect', async (data) => {
+      socket.on('session-detect', (data) => {
          io.emit('session-detect', data)
       })
    })
