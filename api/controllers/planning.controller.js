@@ -9,7 +9,7 @@ exports.create = async (req, res) => {
    } catch (e) {
       res.status(400).json({
          message: 'Une erreur est survenue !',
-         error: e
+         error: e.message
       })
    }
 }
@@ -25,7 +25,7 @@ exports.update = async (req, res) => {
    } catch (e) {
       res.status(400).json({
          message: 'Une erreur est survenue !',
-         error: e
+         error: e.message
       })
    }
 }
@@ -37,7 +37,7 @@ exports.delete = async (req, res) => {
    } catch (e) {
       res.status(400).json({
          message: 'Une erreur est survenue !',
-         error: e
+         error: e.message
       })
    }
 }
@@ -49,7 +49,7 @@ exports.getAll = async (req, res) => {
    } catch (e) {
       res.status(400).json({
          message: 'Une erreur est survenue !',
-         error: e
+         error: e.message
       })
    }
 }
@@ -61,7 +61,7 @@ exports.getAllPersonnel = async (req, res) => {
    } catch (e) {
       res.status(400).json({
          message: 'Une erreur est survenue !',
-         error: e
+         error: e.message
       })
    }
 }
@@ -73,7 +73,19 @@ exports.getClassePlanning = async (req, res) => {
    } catch (e) {
       res.status(400).json({
          message: 'Une erreur est survenue !',
-         error: e
+         error: e.message
+      })
+   }
+}
+
+exports.getInCoursePlanning = async (req, res) => {
+   try {
+      const response = await PlanningModel.getCurrentDayInCoursePlanning()
+      res.json(response)
+   } catch (e) {
+      res.status(400).json({
+         message: 'Une erreur est survenue !',
+         error: e.message
       })
    }
 }
@@ -85,7 +97,7 @@ exports.getOne = async (req, res) => {
    } catch (e) {
       res.status(400).json({
          message: 'Une erreur est survenue !',
-         error: e
+         error: e.message
       })
    }
 }

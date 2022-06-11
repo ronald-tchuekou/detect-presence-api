@@ -1,9 +1,10 @@
 const PersonnelModel = require('../models/personnel.model')
+const PlanningModel = require('../models/planning.model')
 const moment = require("moment");
 const bcrypt = require("bcrypt")
 const {mailTransporter} = require('../config/mails')
 const notifications = require('../config/notification')
-const SessionsModel = require('../models/session.model')
+const socket = require("../config/socket-client.config");
 
 exports.create = async (req, res) => {
    try {
@@ -124,6 +125,66 @@ exports.getByCode = async (req, res) => {
    }
 }
 
+const newPresenceDetected = async (personnel) => {
+   const notify_title = `${personnel.sex === 'F' ? 'Md' : 'Mr'} ${personnel.lastname + ' ' + personnel.firstname}`
+   let notification_title
+   let  notify_content
+   let  notification_content
+   let send = false
+   let is_start = false
+   let planning = {}
+
+   const plannings = await PlanningModel.getCurrentDayPersonnelInCoursePlanning(personnel.personnel_id)
+   if(plannings.length !== 0){
+      const current = plannings[0]
+      planning = current
+      is_start = false
+      await PlanningModel.updatePlanning({
+         status: 'COMPLET',
+         close_date: moment().format('YYYY-MM-DD HH:mm:ss')
+      }, current.planning_id)
+      notification_title = 'Fermeture d\'une nouvelle session'
+      notification_content = `Vous avez fermé la session pour le cours de ${
+         current.matiere
+      } pour la classe de ${current.classe}`
+      notify_content = 'Fermeture d\'une nouvelle session de cours'
+      send = true
+   }else{
+      const plan = await PlanningModel.getCurrentDayPersonnelWaitingPlanning(personnel.personnel_id)
+      if(plan.length !== 0){
+         const current = plan[0]
+         planning = current
+         is_start = true
+         await PlanningModel.updatePlanning({
+            status: 'IN_COURSE',
+            start_date: moment().format('YYYY-MM-DD HH:mm:ss')
+         }, current.planning_id)
+         notification_title = 'Ouverture d\'une nouvelle session'
+         notification_content = `Vous avez ouvert la session pour le cours de ${
+            current.matiere
+         } pour la classe de ${current.classe}`
+         notify_content = 'Ouverture d\'une nouvelle session de cours'
+         send = true
+      }
+   }
+   if(send){
+      await notifications.sendNotificationPush(
+         personnel.notify_token ? [personnel.notify_token] : [],
+         notification_title,
+         notification_content
+      )
+      socket.emit('notify', {
+         title: notify_title,
+         content: notify_content
+      })
+      socket.emit('session-detect', {
+         is_start: is_start,
+         personnel: personnel,
+         planning: planning
+      })
+   }
+}
+
 exports.cardCodeDetection = async (req, res) => {
    const socket = require("../config/socket-client.config")
 
@@ -144,7 +205,7 @@ exports.cardCodeDetection = async (req, res) => {
             is_first: true
          })
          res.json({
-            status: 'OK',
+            status: 'R',
             action: 'Assignation de code serial',
             serial_code
          })
@@ -154,22 +215,9 @@ exports.cardCodeDetection = async (req, res) => {
             is_first: false,
             personnel: find_personnel_response[0]
          })
-         const p = find_personnel_response[0]
-         await notifications.sendNotificationPush(
-            p.notify_token ? [p.notify_token] : [],
-            'Initialisation / Cloture de sessions',
-            'Vous avez Initialisez/Clôturé une sessions pour votre programme.'
-         )
-         socket.emit('notify', {
-            title: `${p.sex === 'F' ? 'Md' : 'Mr'} ${p.lastname + ' ' + p.firstname}`,
-            content: `Initialisation / Clôture de session.`
-         })
-         await SessionsModel.addSession({
-            personnel_id: p.personnel_id,
-            begin: moment().toDate()
-         })
+         await newPresenceDetected(find_personnel_response[0])
          res.json({
-            status: 'OK',
+            status: 'P',
             action: 'Indication de présence',
             serial_code,
             personnel: find_personnel_response[0]

@@ -33,5 +33,9 @@ module.exports = (server) => {
          const response = await NotificationsController.getCycleById(ids[0])
          io.emit('notify', response[0])
       })
+
+      socket.on('session-detect', async (data) => {
+         io.emit('session-detect', data)
+      })
    })
 }

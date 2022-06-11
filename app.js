@@ -64,6 +64,7 @@ require('./api/models/session.model').createTable()
 require('./api/models/paid_taux.model').createTable()
 require('./api/models/paiement.model').createTable()
 require('./api/models/planning.model').createTable()
+require('./api/models/planning.model').addNewColumns()
 
 // Routes
 app.get('/', (req, res) => {
