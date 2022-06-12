@@ -8,6 +8,7 @@ router.get("/in-course", controller.getInCoursePlanning)
 router.get('/in-course-all', controller.getAllInCoursePlanning)
 router.get('/complet-all', controller.getAllCompletPlanning)
 router.get("/classe/:id", controller.getClassePlanning);
+router.get("/personnel/in-course/:id", controller.getPersonnelInCourse);
 router.get("/personnel/:id", controller.getAllPersonnel);
 router.get("/:id", controller.getOne);
 router.post("/", controller.create);

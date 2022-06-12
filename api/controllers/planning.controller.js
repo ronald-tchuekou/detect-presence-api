@@ -66,6 +66,18 @@ exports.getAllPersonnel = async (req, res) => {
    }
 }
 
+exports.getPersonnelInCourse = async (req, res) => {
+   try {
+      const response = await PlanningModel.getCurrentDayInCoursePersonnelPlanning(req.params.id)
+      res.json(response.length > 0 ? response[0] : {})
+   } catch (e) {
+      res.status(400).json({
+         message: 'Une erreur est survenue !',
+         error: e.message
+      })
+   }
+}
+
 exports.getClassePlanning = async (req, res) => {
    try {
       const response = await PlanningModel.getClassePlanning(req.params.id, req.query.start_date, req.query.end_date)
