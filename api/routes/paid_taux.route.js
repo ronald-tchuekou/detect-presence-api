@@ -5,6 +5,7 @@ const router = express.Router()
 
 router.get("/", controller.getAll);
 router.get("/classe", controller.getAllClass);
+router.get("/classe/:id", controller.getByClasse);
 router.get("/:id", controller.getOne);
 router.post("/", controller.create);
 router.put("/:id", controller.update);

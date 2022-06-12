@@ -67,6 +67,18 @@ exports.getAllClass = async (req, res) => {
    }
 }
 
+exports.getByClasse = async (req, res) => {
+   try {
+      const response = await PaidTauxModel.getByClasse(req.params.id)
+      res.json(response.length > 0 ? response[0] : {})
+   } catch (e) {
+      res.status(400).json({
+         message: 'Une erreur est survenue !',
+         error: e
+      })
+   }
+}
+
 exports.getOne = async (req, res) => {
    try {
       const response = await PaidTauxModel.getCycleById(req.params.id)

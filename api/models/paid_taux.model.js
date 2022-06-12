@@ -42,6 +42,11 @@ exports.getAllClasses = async () => await DBInstance
    .join(tableName, ClasseTableName + '.classe_id' ,'=', tableName + '.classe_id')
    .select()
 
+exports.getByClasse = async (classe_id) => await DBInstance
+   .table(ClasseTableName)
+   .where({classe_id})
+   .select()
+
 exports.getCycleById = async (paid_taux_id) => await DBInstance
    .where({paid_taux_id})
    .select()
