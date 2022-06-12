@@ -43,7 +43,7 @@ exports.getAllClasses = async () => await DBInstance
    .select()
 
 exports.getByClasse = async (classe_id) => await DBInstance
-   .table(ClasseTableName)
+   .table(tableName)
    .where({classe_id})
    .select()
 
