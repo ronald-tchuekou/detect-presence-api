@@ -133,16 +133,17 @@ const newPresenceDetected = async (personnel) => {
    let send = false
    let is_start = false
    let planning = {}
+   let current_date = moment().format('YYYY-MM-DD HH:mm:ss')
 
    const plannings = await PlanningModel.getCurrentDayPersonnelInCoursePlanning(personnel.personnel_id)
    console.log('Planning : ', plannings)
    if(plannings.length !== 0){
       const current = plannings[0]
-      planning = current
+      planning = {...current, close_date: current_date}
       is_start = false
       await PlanningModel.updatePlanning({
          status: 'COMPLET',
-         close_date: moment().format('YYYY-MM-DD HH:mm:ss')
+         close_date: current_date
       }, current.planning_id)
       notification_title = 'Fermeture d\'une nouvelle session'
       notification_content = `Vous avez fermé la session pour le cours de ${
@@ -155,11 +156,11 @@ const newPresenceDetected = async (personnel) => {
       console.log('Plan : ', plan)
       if(plan.length !== 0){
          const current = plan[0]
-         planning = current
+         planning = {...current, start_date: current_date}
          is_start = true
          await PlanningModel.updatePlanning({
             status: 'IN_COURSE',
-            start_date: moment().format('YYYY-MM-DD HH:mm:ss')
+            start_date: current_date
          }, current.planning_id)
          notification_title = 'Ouverture d\'une nouvelle session'
          notification_content = `Vous avez ouvert la session pour le cours de ${
