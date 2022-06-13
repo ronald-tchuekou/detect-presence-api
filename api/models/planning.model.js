@@ -217,3 +217,19 @@ exports.deleteCycle = async (planning_id) => await DBInstance
    .where({planning_id})
    .delete()
    .table(tableName)
+
+exports.getPersonnelPresence = async (personnel_id) => await DBInstance
+   .select(
+      tableName + ".*",
+      MatiereTableName + ".label as matiere",
+      MatiereTableName + ".code as matiere_code",
+      ClasseTableName + ".label as classe",
+      ClasseTableName + ".code as classe_code",
+      PeriodTableName + ".*",
+   )
+   .join(MatiereTableName, tableName + '.matiere_id', MatiereTableName + '.matiere_id')
+   .join(ClasseTableName, tableName + '.classe_id', ClasseTableName + '.classe_id')
+   .join(PeriodTableName, tableName + '.period_id', PeriodTableName + '.period_id')
+   .where(tableName + '.personnel_id', '=', personnel_id)
+   .where('date', '<=', moment().format('YYYY-MM-DD'))
+   .table(tableName)

@@ -78,6 +78,18 @@ exports.getPersonnelInCourse = async (req, res) => {
    }
 }
 
+exports.getPresenceStateOfPersonnel = async (req, res) => {
+   try{
+      const response = await PlanningModel.getPersonnelPresence(req.params.personnel_id)
+      res.json(response)
+   }catch(e){
+      res.status(400).json({
+         message: 'Une erreur est survenue !',
+         error: e.message
+      })
+   }
+}
+
 exports.getClassePlanning = async (req, res) => {
    try {
       const response = await PlanningModel.getClassePlanning(req.params.id, req.query.start_date, req.query.end_date)

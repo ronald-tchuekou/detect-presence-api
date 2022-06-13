@@ -33,7 +33,7 @@ exports.sendNotificationPush = async (tokens, title, body, data) => {
             subtitle: 'detect-presence',
             sound: 'default',
             badge: 1,
-            channelId: 'detectChannelNotificationId',
+            channelId: 'default',
             data: data,
             lightColor: '#004e9b'
          })
